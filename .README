@@ -1,0 +1,46 @@
+
+# Ticketing - A demo microservices project
+
+A mini project to simulate a ticketing system using microservices for learning purposes
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/hanknguyen14/ticketing
+```
+
+Go to the project directory
+
+```bash
+  cd ticketing
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Copy env example
+
+```bash
+  cp .env.example .env
+```
+
+Run start application
+
+```bash
+  npm start
+```
+
+## Badges
+
+Add badges from somewhere like: [shields.io](https://shields.io/)
+
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+
+## Feedback
+
+If you have any feedback, please reach out to us at hungnguyen.dhg@gmail.com
