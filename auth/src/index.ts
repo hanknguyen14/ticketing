@@ -4,6 +4,7 @@ import 'express-async-errors';
 import { currentUserRouter, signInRouter, signOutRouter, signUpRouter } from "./routes";
 import { errorHandler } from "./middlewares";
 import { NotFoundError } from "./errors";
+import mongoose from 'mongoose';
 
 const app = express();
 app.use(json());
@@ -18,7 +19,17 @@ app.get('*', () => {
     throw new NotFoundError();
 });
 
-app.listen(3000, () => {
-    console.log("listening on port 3000!");
-});
+const start = async () => {
+    try {
+        await mongoose.connect('mongodb://auth-mongo-srv:27017/auth')
+    } catch (err) {
+        console.error(err);
+    }
+    console.log('Connected to MongoDB');
+    app.listen(3000, () => {
+        console.log("listening on port 3000!");
+    });
+}
+
+start();
 
