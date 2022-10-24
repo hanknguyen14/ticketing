@@ -7,8 +7,7 @@ import {
   signOutRouter,
   signUpRouter,
 } from './routes';
-import { errorHandler } from './middlewares';
-import { NotFoundError } from './errors';
+import { errorHandler, NotFoundError } from '@dhg-org/common';
 import cookieSession from 'cookie-session';
 
 const app = express();

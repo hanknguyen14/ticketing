@@ -1,9 +1,8 @@
 import express, { Request, Response } from 'express';
-import { body, validationResult } from 'express-validator';
-import { BadRequestError, RequestValidationError } from '../errors';
+import { body } from 'express-validator';
+import { BadRequestError, validationRequest } from '@dhg-org/common';
 import { User } from '../models';
 import jwt from 'jsonwebtoken';
-import { validationRequest } from '../middlewares';
 
 const router = express.Router();
 

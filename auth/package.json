@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@dhg-org/common": "^1.0.1",
     "@types/cookie-session": "^2.0.44",
     "@types/jsonwebtoken": "^8.5.9",
     "cookie-session": "^2.0.0",

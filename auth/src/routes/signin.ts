@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { BadRequestError } from '../errors';
-import { validationRequest } from '../middlewares';
+import { BadRequestError, validationRequest } from '@dhg-org/common';
 import { User } from '../models';
 import { Password } from '../services';
 import jwt from 'jsonwebtoken';
