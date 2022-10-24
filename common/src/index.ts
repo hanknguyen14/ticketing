@@ -1,5 +1,2 @@
-interface Color {
-  red: string;
-}
-
-console.log('hello');
+export * from './errors';
+export * from './middlewares';
