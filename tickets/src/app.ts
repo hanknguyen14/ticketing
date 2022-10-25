@@ -7,6 +7,7 @@ import {
   createTicketRouter,
   getTicketRouter,
   getTicketsRouter,
+  updateTicketRouter,
 } from './routes';
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(currentUser);
 app.use(createTicketRouter);
 app.use(getTicketRouter);
 app.use(getTicketsRouter);
+app.use(updateTicketRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
