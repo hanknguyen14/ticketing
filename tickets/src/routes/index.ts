@@ -1,2 +1,3 @@
 export * from './createTicket';
-export * from './getTicketById';
+export * from './getTicket';
+export * from './getTickets';
