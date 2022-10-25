@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 interface UserPayload {
   email: string;
   password: string;
+  id: string;
 }
 
 declare global {
