@@ -6,18 +6,20 @@ declare global {
   var signin: () => string[];
 }
 
+jest.mock('../__mocks__');
+
 let mongo: any;
 beforeAll(async () => {
   process.env.JWT_KEY = 'asdfasdf';
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 
-  mongo = new MongoMemoryServer();
-  const mongoUri = await mongo.getUri();
-
+  const mongo = await MongoMemoryServer.create();
+  const mongoUri = mongo.getUri();
   await mongoose.connect(mongoUri, {});
 });
 
 beforeEach(async () => {
+  jest.clearAllMocks();
   const collections = await mongoose.connection.db.collections();
 
   for (let collection of collections) {
@@ -26,14 +28,16 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  await mongo.stop();
+  if (mongo) {
+    await mongo.stop();
+  }
   await mongoose.connection.close();
 });
 
 global.signin = () => {
   // Build a JWT payload.  { id, email }
   const payload = {
-    id: '1lk24j124l',
+    id: new mongoose.Types.ObjectId().toHexString(),
     email: 'test@test.com',
   };
 
