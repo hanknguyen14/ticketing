@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@dhg-org/common": "^1.0.1",
+    "@dhg-org/common": "^1.0.7",
     "@types/cookie-session": "^2.0.44",
     "@types/express": "^4.17.14",
     "cookie-session": "^2.0.0",
