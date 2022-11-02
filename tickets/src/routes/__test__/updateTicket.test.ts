@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { app } from '../../app';
 import mongoose from 'mongoose';
-import { natsWrapper } from '../../__mocks__';
+import { natsWrapper } from '@dhg-org/common';
 
 it('returns a 404 if the provided id does not exist', async () => {
   const id = new mongoose.Types.ObjectId().toHexString();

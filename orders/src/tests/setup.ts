@@ -1,12 +1,21 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
+import { natsWrapper } from '../__mocks__';
 
 declare global {
   var signin: () => string[];
 }
 
-jest.mock('../__mocks__');
+jest.mock('@dhg-org/common', () => {
+  const originalModule = jest.requireActual('@dhg-org/common');
+
+  return {
+    __esModule: true,
+    ...originalModule,
+    natsWrapper,
+  };
+});
 
 let mongo: any;
 beforeAll(async () => {

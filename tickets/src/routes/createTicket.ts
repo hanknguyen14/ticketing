@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import { requireAuth, validationRequest, natsWrapper } from '@dhg-org/common';
-import { Ticket } from '../models/ticket';
+import { Ticket } from '../models';
 import { TicketCreatedPublisher } from '../events';
 
 const router = express.Router();
