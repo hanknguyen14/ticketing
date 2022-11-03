@@ -3,7 +3,11 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError, currentUser } from '@dhg-org/common';
-import { createOrderRouter, getUserOrdersRouter } from './routes';
+import {
+  createOrderRouter,
+  getUserOrdersRouter,
+  getUserOrderRouter,
+} from './routes';
 
 const app = express();
 app.set('trust proxy', true);
@@ -17,6 +21,7 @@ app.use(
 app.use(currentUser);
 app.use(createOrderRouter);
 app.use(getUserOrdersRouter);
+app.use(getUserOrderRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
