@@ -7,6 +7,7 @@ import {
   createOrderRouter,
   getUserOrdersRouter,
   getUserOrderRouter,
+  deleteUserOrderRouter,
 } from './routes';
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(currentUser);
 app.use(createOrderRouter);
 app.use(getUserOrdersRouter);
 app.use(getUserOrderRouter);
+app.use(deleteUserOrderRouter);
 
 app.all('*', async (req, res) => {
   throw new NotFoundError();
