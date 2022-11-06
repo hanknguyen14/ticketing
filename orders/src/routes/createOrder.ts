@@ -6,9 +6,11 @@ import {
   NotFoundError,
   OrderStatus,
   BadRequestError,
+  natsWrapper,
 } from '@dhg-org/common';
 import { body } from 'express-validator';
 import { Ticket, Order } from '../models';
+import { OrderCreatedPublisher } from '../events';
 
 const router = express.Router();
 
@@ -54,6 +56,16 @@ router.post(
     await order.save();
 
     // Publish an event saying that an order was created
+    new OrderCreatedPublisher(natsWrapper.client).publish({
+      id: order.id,
+      status: order.status,
+      userId: order.userId,
+      expiresAt: order.expiresAt.toISOString(),
+      ticket: {
+        id: ticket.id,
+        price: ticket.price,
+      },
+    });
 
     res.status(201).send(order);
   }
