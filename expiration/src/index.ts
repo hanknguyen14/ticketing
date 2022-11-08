@@ -1,4 +1,5 @@
 import { natsWrapper } from '@dhg-org/common';
+import { OrderCreatedListener } from './events/listeners';
 
 const start = async () => {
   if (!process.env.NATS_CLIENT_ID) {
@@ -23,6 +24,8 @@ const start = async () => {
     });
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
+
+    new OrderCreatedListener(natsWrapper.client).listen();
   } catch (err) {
     console.error(err);
   }
