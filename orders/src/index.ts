@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from '@dhg-org/common';
-import { TicketCreatedListener, TicketUpdatedListener } from './events';
+import {
+  TicketCreatedListener,
+  TicketUpdatedListener,
+  ExpirationCompleteListener,
+} from './events';
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
@@ -35,6 +39,7 @@ const start = async () => {
 
     new TicketCreatedListener(natsWrapper.client).listen();
     new TicketUpdatedListener(natsWrapper.client).listen();
+    new ExpirationCompleteListener(natsWrapper.client).listen();
 
     await mongoose.connect(process.env.MONGO_URI);
     console.log('Connected to MongoDb');
