@@ -7,9 +7,12 @@ import {
   NotAuthorizedError,
   NotFoundError,
   OrderStatus,
+  natsWrapper,
 } from '@dhg-org/common';
 import { Order } from '../models';
 import { stripe } from '../services';
+import { Payment } from '../models/payment';
+import { PaymentCreatedPublisher } from '../events/publishers/payment-created-publisher';
 
 const router = express.Router();
 
@@ -33,12 +36,23 @@ router.post(
       throw new BadRequestError('Cannot pay for an cancelled order');
     }
 
-    await stripe.charges.create({
+    const charge = await stripe.charges.create({
       currency: 'usd',
       amount: order.price * 100,
       source: token,
     });
-    res.status(201).send({ success: true });
+    const payment = Payment.build({
+      orderId,
+      stripeId: charge.id,
+    });
+    await payment.save();
+    await new PaymentCreatedPublisher(natsWrapper.client).publish({
+      id: payment.id,
+      orderId: payment.orderId,
+      stripeId: payment.stripeId,
+    });
+
+    res.status(201).send({ id: payment.id });
   }
 );
 
