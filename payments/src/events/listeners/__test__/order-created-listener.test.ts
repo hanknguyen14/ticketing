@@ -1,15 +1,14 @@
 import mongoose from 'mongoose';
 import { Message } from 'node-nats-streaming';
-import { OrderCreatedEvent, OrderStatus } from '@cygnetops/common';
-import { natsWrapper } from '../../../nats-wrapper';
-import { OrderCreatedListener } from '../order-created-listener';
-import { Order } from '../../../models/order';
+import { OrderCreatedEvent, OrderStatus, natsWrapper } from '@dhg-org/common';
+import { OrderCreatedListener } from '..';
+import { Order } from '../../../models';
 
 const setup = async () => {
   const listener = new OrderCreatedListener(natsWrapper.client);
 
   const data: OrderCreatedEvent['data'] = {
-    id: mongoose.Types.ObjectId().toHexString(),
+    id: new mongoose.Types.ObjectId().toHexString(),
     version: 0,
     expiresAt: 'alskdjf',
     userId: 'alskdjf',

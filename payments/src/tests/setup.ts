@@ -1,10 +1,10 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import jwt from 'jsonwebtoken';
-import { natsWrapper } from '../__mocks__';
+import { natsWrapper, stripe } from '../__mocks__';
 
 declare global {
-  var signin: () => string[];
+  var signin: (id?: string) => string[];
 }
 
 jest.mock('@dhg-org/common', () => {
@@ -14,6 +14,13 @@ jest.mock('@dhg-org/common', () => {
     __esModule: true,
     ...originalModule,
     natsWrapper,
+  };
+});
+
+jest.mock('../services', () => {
+  return {
+    __esModule: true,
+    stripe,
   };
 });
 
@@ -43,10 +50,10 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = () => {
+global.signin = (id?: string) => {
   // Build a JWT payload.  { id, email }
   const payload = {
-    id: new mongoose.Types.ObjectId().toHexString(),
+    id: id ?? new mongoose.Types.ObjectId().toHexString(),
     email: 'test@test.com',
   };
 
